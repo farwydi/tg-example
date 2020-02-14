@@ -1,33 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world
+  name: tg-example
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-world
+      app: tg-example
   template:
     metadata:
       labels:
-        app: hello-world
+        app: tg-example
     spec:
       containers:
-      - image: okteto/hello-world:golang
-        name: hello-world
-
+      - image: okteto/tg-example:golang
+        name: tg-example
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world
+  name: tg-example
   annotations:
     dev.okteto.com/auto-ingress: "true"
 spec:
   type: ClusterIP  
   ports:
-  - name: "hello-world"
+  - name: "tg-example"
     port: 8080
   selector:
-    app: hello-world
+    app: tg-example
