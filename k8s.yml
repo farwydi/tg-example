@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: tg-example
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: tg-example
@@ -13,8 +13,19 @@ spec:
         app: tg-example
     spec:
       containers:
-      - image: okteto/tg-example:golang
+      - image: farwydi/nasa-apod-bot:latest
         name: tg-example
+        env:
+          - name: NASA_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: nasa-apod-bot
+                key: api-key
+          - name: ENDPOINT_URL
+            valueFrom:
+              secretKeyRef:
+                name: nasa-apod-bot
+                key: endpoint
 ---
 apiVersion: v1
 kind: Service

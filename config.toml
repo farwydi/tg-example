@@ -1,0 +1,5 @@
+NasaApiKey = "DEMO_KEY"
+Endpoint = "/"
+
+[Provider]
+Apod = "apodhttp"
