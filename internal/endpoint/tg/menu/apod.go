@@ -8,15 +8,15 @@ func ApodMenuBuild(isToday bool, next, prev string) tgbotapi.InlineKeyboardMarku
 	if isToday {
 		return tgbotapi.NewInlineKeyboardMarkup(
 			tgbotapi.NewInlineKeyboardRow(
-				tgbotapi.NewInlineKeyboardButtonData("Назад: "+prev, "prev_"+prev),
+				tgbotapi.NewInlineKeyboardButtonData("Назад: "+prev, "prev "+prev),
 			),
 		)
 	}
 
 	return tgbotapi.NewInlineKeyboardMarkup(
 		tgbotapi.NewInlineKeyboardRow(
-			tgbotapi.NewInlineKeyboardButtonData("Назад: "+prev, "prev_"+prev),
-			tgbotapi.NewInlineKeyboardButtonData("Дальше: "+next, "next_"+next),
+			tgbotapi.NewInlineKeyboardButtonData("Назад: "+prev, "prev "+prev),
+			tgbotapi.NewInlineKeyboardButtonData("Дальше: "+next, "next "+next),
 		),
 	)
 }
