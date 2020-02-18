@@ -41,25 +41,17 @@ func (app App) Callback(_ context.Context, update tgbotapi.Update) error {
 			return err
 		}
 
-		_, err = app.bot.Send(tgbotapi.EditMessageTextConfig{
-			BaseEdit: tgbotapi.BaseEdit{
-				ChatID:    update.CallbackQuery.Message.Chat.ID,
-				MessageID: update.CallbackQuery.Message.MessageID,
-			},
-			ParseMode: "markdown",
-			Text: fmt.Sprintf("*%s*\n\n%s\n%s",
-				apod.Title, apod.Explanation, apod.Image,
-			),
-		})
-		if err != nil {
-			return err
-		}
-
-		_, err = app.bot.Send(tgbotapi.NewEditMessageReplyMarkup(
+		msg := tgbotapi.NewEditMessageText(
 			update.CallbackQuery.Message.Chat.ID,
 			update.CallbackQuery.Message.MessageID,
-			menu.ApodMenuBuild(app.ApodUseCase.CallbackForm(apod.Date)),
-		))
+			fmt.Sprintf("*%s*\n\n%s\n%s",
+				apod.Title, apod.Explanation, apod.Image,
+			),
+		)
+		msg.ParseMode = "markdown"
+		*msg.ReplyMarkup = menu.ApodMenuBuild(app.ApodUseCase.CallbackForm(apod.Date))
+
+		_, err = app.bot.Send(msg)
 		if err != nil {
 			return err
 		}
